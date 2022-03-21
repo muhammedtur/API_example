@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,4 +14,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('site.main');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard/clients', 'AuthController@clients')->middleware(['auth'])->name('dashboard.clients');
+
+Route::get('/login', function() {
+    return view('auth.login');
+})->middleware('guest')->name('login');
+Route::post('/login', 'AuthController@login')->middleware('guest');
+
+Route::post('/logout', 'AuthController@logout')->middleware('auth')->name('logout');
