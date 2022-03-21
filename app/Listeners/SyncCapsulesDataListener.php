@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\SyncCapsulesDataEvent;
 use App\Mail\SyncNotificationMail;
+use App\Models\User;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -30,6 +31,11 @@ class SyncCapsulesDataListener
      */
     public function handle(SyncCapsulesDataEvent $event)
     {
-        Mail::to($event->email_address)->send(new SyncNotificationMail($event->email_address));
+        $this->event = $event;
+        User::OfAdminUsers()->chunk(10,function($users){
+            foreach($users as $user){
+                Mail::to($user->email)->send(new SyncNotificationMail($this->event->subject, $this->event->msg));
+            }
+        });
     }
 }

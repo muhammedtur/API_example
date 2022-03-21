@@ -25,12 +25,11 @@ class Kernel extends ConsoleKernel
                   ->withoutOverlapping()
                   ->runInBackground()
                   ->before(function () {
-                        event(new SyncCapsulesDataEvent('started'));
-                    })
+                    event(new SyncCapsulesDataEvent(__('email.capsules_sync_start_title'), __('email.capsules_sync_start_msg')));
+                })
                   ->after(function () {
-                        event(new SyncCapsulesDataEvent('completed'));
-                    });
-       ;
+                    event(new SyncCapsulesDataEvent(__('email.capsules_sync_completed_title'), __('email.capsules_sync_completed_msg')));
+                });
     }
 
     /**

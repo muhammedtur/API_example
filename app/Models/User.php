@@ -33,4 +33,9 @@ class User extends Authenticatable
         'email',
         'remember_token',
     ];
+
+    public function scopeOfAdminUsers($query)
+    {
+        return $query->where('is_admin', 1);
+    }
 }

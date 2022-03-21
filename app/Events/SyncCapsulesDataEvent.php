@@ -14,14 +14,16 @@ class SyncCapsulesDataEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $subject;
     public $msg;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($msg)
+    public function __construct($subject, $msg)
     {
+        $this->subject = $subject;
         $this->msg = $msg;
     }
 }
