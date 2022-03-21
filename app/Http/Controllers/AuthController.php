@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Auth\Events\Lockout;
 
 use Validator;
 
@@ -17,10 +17,26 @@ use Validator;
 
 class AuthController extends Controller
 {
-    public function login(LoginRequest $request)
+    public function login(Request $request)
     {
-        $request->authenticate();
-        $request->session()->regenerate();
+        $rules = [
+            'email' => 'required|email',
+            'password' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+
+            return response()->json($validator->messages(), 400);
+        }
+
+        $credentials = ['email' => $request->email, 'password' => $request->password, 'active' => 1];
+
+        if (Auth::attempt($credentials, $request->remember)) {
+            $request->session()->regenerate();
+            event(new Lockout($request));
+        }
 
         return redirect()->route('dashboard');
     }
