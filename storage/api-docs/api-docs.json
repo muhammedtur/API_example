@@ -155,6 +155,68 @@
                     }
                 }
             }
+        },
+        "/oauth/authorize": {
+            "get": {
+                "tags": [
+                    "OAuth"
+                ],
+                "parameters": [
+                    {
+                        "name": "client_id",
+                        "in": "query",
+                        "description": "Client ID",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "redirect_uri",
+                        "in": "query",
+                        "description": "Callback / Client redirect URL",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "response_type",
+                        "in": "query",
+                        "description": "code / This tells the authorization server that the application is initiating the authorization code flow",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "description": "The application generates a random string and includes it in the request. It should then check that the same value is returned after the user authorizes the app. This is used to prevent CSRF attacks.",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "scope",
+                        "in": "query",
+                        "description": "One or more space-separated strings indicating which permissions the application is requesting. The specific OAuth API you’re using will define the scopes that it supports.",
+                        "type": "string"
+                    }
+                ],
+                "summary": "OAuth API",
+                "operationId": "ec2a3099247gtreba480e78b8d7337",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "string",
+                                            "example": "def5020016fae14de69a133b840459c02f24a94fa9757efa0ffc790b71ddbb8bda40abd98105dbbc2fca9c4959c252cacc00c0d9d3450e3f24c0d918b37a3a2a66e884aa0512226bda31c688ad4e65d5686259fe9e5f726bf6c76af0370aa0930c49ba1fdef457680e6e96962b1035f38fbcd25928137d57a913f7e54151ac03a4295a5091a14167a1021eaa74f8b4b9edb24028d40b94a99eb646d28a3b43d023054e3352f99063493b1649891b52b6b610f40e68c2ff60b8e4a2ee4563bcc109cbf6cfbbf5c8cacf0e572e3a2af7d7a209d83a68ea96452e678c1e347c38fa1d4b13427b1a9cdb243b73c1bc8a06131b73449df1fef9a9411217403821ee481cc6a3c8449db2563e43daef755effa2b2c9d7bb3dcf00c77bbc1dc06460395579635f160f5a999bbafda59fce9be38942402bd57c7ae880e3e57e83f9292b16cd59d81e9586c84fbb2ef4ee95248f7d61f5cba889216b5fc78b"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "security": [
