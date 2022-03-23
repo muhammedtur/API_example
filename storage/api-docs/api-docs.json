@@ -5,15 +5,6 @@
         "version": "1.0"
     },
     "paths": {
-        "/auth": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Auth API Documentation"
-                    }
-                }
-            }
-        },
         "/api/capsules": {
             "get": {
                 "tags": [
@@ -41,6 +32,84 @@
                                             "status": {
                                                 "type": "string",
                                                 "example": "retired"
+                                            },
+                                            "original_launch": {
+                                                "type": "string",
+                                                "example": "2010-12-08T15:43:00.000Z"
+                                            },
+                                            "original_launch_unix": {
+                                                "type": "number",
+                                                "example": 1291822980
+                                            },
+                                            "missions": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "example": {
+                                                        "name": "COTS 1",
+                                                        "flight": 7
+                                                    }
+                                                }
+                                            },
+                                            "landings": {
+                                                "type": "number",
+                                                "example": 1
+                                            },
+                                            "type": {
+                                                "type": "string",
+                                                "example": "Dragon 1.0"
+                                            },
+                                            "details": {
+                                                "type": "string",
+                                                "example": "Reentered after three weeks in orbit"
+                                            },
+                                            "reuse_count": {
+                                                "type": "number",
+                                                "example": 0
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/capsules?status=active|retired|unknown": {
+            "get": {
+                "tags": [
+                    "Capsules"
+                ],
+                "parameters": [{
+                    "name": "status",
+                    "in": "query",
+                    "description": "active|retired|unknown|destroyed",
+                    "type": "string"
+                }],
+                "summary": "Capsules API",
+                "operationId": "ec2a309924760dfb5ba480e78b8d7337",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "capsule_serial": {
+                                                "type": "string",
+                                                "example": "C101"
+                                            },
+                                            "capsule_id": {
+                                                "type": "string",
+                                                "example": "dragon1"
+                                            },
+                                            "status": {
+                                                "type": "string",
+                                                "example": "active"
                                             },
                                             "original_launch": {
                                                 "type": "string",
