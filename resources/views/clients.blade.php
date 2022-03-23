@@ -16,6 +16,7 @@
                             <p><b>Client ID:</b>{{ $client->id }}</p>
                             <p><b>Client Redirect: </b>{{ $client->redirect  }}</p>
                             <p><b>Client Secret: </b>{{ $client->secret }}</p>
+                            <p><b>Authorize: </b><a href="/oauth/authorize?client_id={{$client->id}}&redirect_uri={{$client->redirect}}&response_type=code&scope=&state={{\Illuminate\Support\Str::random(30)}}" target="_blank">Link</a></p>
                         </div>
                     @endforeach
                 </div>

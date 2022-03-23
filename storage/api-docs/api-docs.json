@@ -86,7 +86,8 @@
                     "name": "status",
                     "in": "query",
                     "description": "active|retired|unknown|destroyed",
-                    "type": "string"
+                    "type": "string",
+                    "required": true
                 }],
                 "summary": "Capsules API",
                 "operationId": "ec2a309924760dfb5ba480e78b8d7337",
