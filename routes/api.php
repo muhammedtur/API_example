@@ -20,6 +20,4 @@ Route::get('/user', function (Request $request) {
 Route::middleware('cors')->group(function(){
     Route::get('/capsules', 'CapsulesAPIController@get_all_data');
     Route::get('/capsules/{capsule_serial}', 'CapsulesAPIController@get_with_serial');
-
-    // Route::post('/oauth/authorize', 'OAuthController@authorize_user');
 });
