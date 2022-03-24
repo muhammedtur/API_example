@@ -156,15 +156,16 @@
                 }
             }
         },
-        "/oauth/authorize": {
+        "/oauth/authorize?client_id&redirect_uri&response_type&scope&state": {
             "get": {
                 "tags": [
-                    "OAuth"
+                    "OAuth2"
                 ],
                 "parameters": [
                     {
                         "name": "client_id",
                         "in": "query",
+                        "example": "1",
                         "description": "Client ID",
                         "type": "string",
                         "required": true
@@ -172,6 +173,7 @@
                     {
                         "name": "redirect_uri",
                         "in": "query",
+                        "example": "http://localhost/dashboard",
                         "description": "Callback / Client redirect URL",
                         "type": "string",
                         "required": true
@@ -181,6 +183,7 @@
                         "in": "query",
                         "description": "code / This tells the authorization server that the application is initiating the authorization code flow",
                         "type": "string",
+                        "example": "code",
                         "required": true
                     },
                     {
@@ -188,6 +191,7 @@
                         "in": "query",
                         "description": "The application generates a random string and includes it in the request. It should then check that the same value is returned after the user authorizes the app. This is used to prevent CSRF attacks.",
                         "type": "string",
+                        "example": "5t5trgfddfUDRGhthrt",
                         "required": true
                     },
                     {
@@ -217,9 +221,148 @@
                     }
                 }
             }
+        },
+        "/oauth/token": {
+            "post": {
+                "tags": [
+                    "OAuth2"
+                ],
+                "parameters": [
+                    {
+                        "name": "grant_type",
+                        "in": "formData",
+                        "description": "This tells the token endpoint that the application is using the Authorization Code grant type.",
+                        "type": "string",
+                        "example": "authorization_code",
+                        "required": true
+                    },
+                    {
+                        "name": "client_id",
+                        "in": "formData",
+                        "description": "Client ID",
+                        "example": "1",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "client_secret",
+                        "in": "formData",
+                        "description": "Client Secret",
+                        "example": "dYJR3wh5oKvOBM0GurWPemIIHqNrJzbkTsDWk3aV",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "redirect_uri",
+                        "in": "formData",
+                        "description": "The same redirect URI that was used when requesting the code.",
+                        "example": "http://localhost/dashboard",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "code",
+                        "in": "formData",
+                        "description": "The application includes the authorization code it was given in the redirect.",
+                        "example": "def502000fd440c198939c2e72ec1f7c7dc2733cef1743bcb16d5b34ad1da68a5dee24f5a0a2d3e36f091dc13b753b10dc5611c8a18498f9451b0aa802a95b41270941e064abde34a64a099006fe0530583996405db85dcdb54c0f230f8ec67ae5d0cc4fc203076285f4df2a79b65c88a9c622e766586384593ae7a319dc6b4126308d440c5c069f7496544856faa94ee66c9f647508b0c1af4ad82b318c482a6964850a9546bcde4f0c45b4431bbbc763f25fc7fccf1fee6344d8cb75caf91414d35c80dd0b6fa4d7e2eec1932334dcb2a7004914bc4db37c55b3567afb58dc33f722fa3b4c1f96a1fbbb3142546ee9074d55368b1a5056cdebd7ff4ed84d2ebc0bf3b6e658cf3a541bcc49cc13fe2a300b18d467027ea1a2aeae441a6b9803e20095aca571de57fee04df7382dbb409ce760f82b16edf1206a6a81bcc7dcc8c462b44db1c46b546206c8f03ceec86bdbeb38af8eb2e2dc43cc87",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "summary": "OAuth API",
+                "operationId": "e4ef099247gtreba480e78b8d7337",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": "31536000"
+                                        },
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNzA0NDI3MDE0N2E3MjNjMTM2NTQyYzhjMjkyNzhmOGQ2MjQ0ZjNjMDBiZDc4YWVlZTc1OWUzZWViNTg5OTFmYzAwMTViYzkyMDllMzdkZmQiLCJpYXQiOjE2NDgwNzk4MTAuMTU3NDI3LCJuYmYiOjE2NDgwNzk4MTAuMTU3NDI5LCJleHAiOjE2Nzk2MTU4MTAuMDA3NDYxLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.78Y65cfDQFCePW5GiYkt6TYQ3xQ75mnEf_Gec-IRDtsNoxYy1cC0RZAY74-DN2QZ6wo19V7vpWsoBAMfYmizNApHRP6wjyo2TAaI04z7QBTqjbzqpeuWInASM0gJhuTStvPMkjPvD-7qB1b-QQ9Geqa_njduTpkl59x3sOoZR0IwpULwvMNnHBij2faflHzlTqM55HOzTX3vBC21iybQ6YqZ4Wn21cqdFOykf3P9vzW1TW30tX-clMEGxqni7liCGnjjWokJ5-6Qf2Zmhnd3reTbk4efr5b009kH3m58FR-OTXKgFZkhJIC-CczljjEnWOZ_u0RrwGDw-OWDqvtqDfpGGdAYwBrFysaj-ND1m6fOh81GxrdW57-TEp19XFuX19XEv59E785moV80K7YvXTvYN5lR9J2AIjMKQfikhW5GIQvRtGFPF3st6sUdmqkIlzSlkCWIk1xqVkek22TEofdVUXmQa2dYORmf_9MemGc48d1uP8EA6MZRMcoyxCvW7JwmQYAoTi8QYV-K5POxqKbFHOveuU9nSb2vWpxxLKHo7rwkaPhWISHtR85zicqw94h0p7gtdtpsVkVGRBA73Qi4HmNk58xs-hs7vE0qvkh-11CY71Ask_cZP-RTcGKYZKDw1NUk07dL7UwoV7qBnjeEsJ4WP9BN9wkF9AKh3iI"
+                                        },
+                                        "refresh_token": {
+                                            "type": "string",
+                                            "example": "def502009e8e1266beb6aa323206eb65d902b0b7d0f8ffdfa30a7a6a7268200215e7fdffa7525e57020222e93625c16f0402bfd57500a14a15c27cd9b78d6f24e3d66da0a29345b73e278cb073aa83bfdb2a4ab07718422d4e0f7a46208de23874b035aba34ef73c2607f70df260856eda3f2d003736e246bd8ff5112ab03eae2ed91e01d71e8b554f6eba80712975940f17a8383c2785b5685a2417cd2ef90eddb7f69c9d7094e98a9a021a396f7d9529b280d6f9250ddcdd1d856378aa47c408cfb74a8c8ebb743f336d1b56d4b2d9efa148c05c24e59579bf047fffad14db21f277512895db7a05a8f700fbf0df6485cc7d6647f40aeae25208f7e338bf97f5a018d47e8f648fc857fcb3470071a177a8db4df5d42c2265bed13c85cfd993664ba5b8f33431b1ea82b4a674cd7c2c9f7be5e3f1f012235f71534ef76897e2541ee75a0649b873e4f94291cd493d99976bf30d24e288bbfd76f4b733e72ea3fe"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user": {
+            "get": {
+                "tags": [
+                    "OAuth2"
+                ],
+                "summary": "OAuth API",
+                "operationId": "e4eef3wrqgtreba480e78b8d7337",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "username": {
+                                            "type": "string",
+                                            "example": "admin"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "admin"
+                                        },
+                                        "active": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "is_admin": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "created_at": {
+                                            "type": "date",
+                                            "example": "2022-03-21T00:27:59.000000Z"
+                                        },
+                                        "updated_at": {
+                                            "type": "date",
+                                            "example": "2022-03-21T00:27:59.000000Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
+    "components": {        
+        "securitySchemes": {
+          "bearerAuth": {
+              "type": "http",
+              "scheme":"bearer",
+              "bearerFormat":"JWT"
+          }
+        }
+      },
     "security": [
-        []
+        { "bearerAuth": [] } 
     ]
 }
