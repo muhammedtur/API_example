@@ -6,17 +6,15 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class UserTest extends TestCase
+class SyncCapsulesTest extends TestCase
 {
     /**
      * A basic feature test example.
      *
      * @return void
      */
-    public function test_example()
+    public function test_console_command()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        $this->artisan('capsules:sync')->assertExitCode(0);
     }
 }

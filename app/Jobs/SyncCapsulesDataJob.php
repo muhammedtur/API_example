@@ -36,25 +36,31 @@ class SyncCapsulesDataJob implements ShouldQueue
      */
     public function handle()
     {
-        $response = Http::acceptJson()->get(env('CAPSULES_API_URL'));
-        $datas = json_decode($response->body(), true);
-
-        foreach ($datas as $data) {
-            Capsule::updateOrCreate([
-                'capsule_serial' => $data['capsule_serial'],
-            ],
-            [
-                'capsule_id' => $data['capsule_id'],
-                'status' => $data['status'],
-                'original_launch' => $data['original_launch'],
-                'original_launch_unix' => $data['original_launch_unix'],
-                'missions' => $data['missions'],
-                'landings' => $data['landings'],
-                'type' => $data['type'],
-                'details' => $data['details'],
-                'reuse_count' => $data['reuse_count'],
-            ]);
+        try {
+            $response = Http::acceptJson()->get(env('CAPSULES_API_URL', 'https://api.spacexdata.com/v3/capsules'));
+            $datas = json_decode($response->body(), true);
+    
+            foreach ($datas as $data) {
+                if (isset($data['capsule_serial'])) {
+                    Capsule::updateOrCreate([
+                        'capsule_serial' => $data['capsule_serial'],
+                    ],
+                    [
+                        'capsule_id' => $data['capsule_id'],
+                        'status' => $data['status'],
+                        'original_launch' => $data['original_launch'],
+                        'original_launch_unix' => $data['original_launch_unix'],
+                        'missions' => $data['missions'],
+                        'landings' => $data['landings'],
+                        'type' => $data['type'],
+                        'details' => $data['details'],
+                        'reuse_count' => $data['reuse_count'],
+                    ]);
+                }
+            }
+            Log::info($datas);
+        } catch (\Exception $e) {
+            Log::error($e);
         }
-        Log::info($datas);
     }
 }
