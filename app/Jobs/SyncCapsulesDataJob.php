@@ -41,7 +41,11 @@ class SyncCapsulesDataJob implements ShouldQueue
             $datas = json_decode($response->body(), true);
     
             foreach ($datas as $data) {
+                // if capsule_serial key is exist
                 if (isset($data['capsule_serial'])) {
+
+                    // Create new capsule data in the database or updated if has data by 'capsule_serial' in the database before
+                    // capsule_serial has to be unique
                     Capsule::updateOrCreate([
                         'capsule_serial' => $data['capsule_serial'],
                     ],
@@ -58,6 +62,7 @@ class SyncCapsulesDataJob implements ShouldQueue
                     ]);
                 }
             }
+            // Write a log when the sync is complete. (whole JSON)
             Log::info($datas);
         } catch (\Exception $e) {
             Log::error($e);

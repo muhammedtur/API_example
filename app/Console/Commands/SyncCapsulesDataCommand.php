@@ -39,6 +39,7 @@ class SyncCapsulesDataCommand extends Command
      */
     public function handle()
     {
+        // Queue and run the sync process - App\Jobs\SyncCapsulesDataJob
         SyncCapsulesDataJob::dispatch();
     }
 }

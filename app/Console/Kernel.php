@@ -20,14 +20,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // Runs 'capsules:sync' command to start sync every 3 minutes
         $schedule->command('capsules:sync')
                   ->everyThreeMinutes()
                   ->withoutOverlapping()
                   ->runInBackground()
                   ->before(function () {
+                    // Sends email notification before sync starts
                     event(new SyncCapsulesDataEvent(__('emails.capsules_sync_start_title'), __('emails.capsules_sync_start_msg')));
                 })
                   ->after(function () {
+                    // Sends email notification after sync is finished
                     event(new SyncCapsulesDataEvent(__('emails.capsules_sync_completed_title'), __('emails.capsules_sync_completed_msg')));
                 });
     }

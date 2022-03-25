@@ -31,6 +31,9 @@ class SyncCapsulesDataListener
      */
     public function handle(SyncCapsulesDataEvent $event)
     {
+        // Sends sync notification to admins
+        // chunk() method is for use when need to work with a large dataset and take an action on that data chunk by chunk.
+
         $this->event = $event;
         User::OfAdminUsers()->chunk(10,function($users){
             foreach($users as $user){

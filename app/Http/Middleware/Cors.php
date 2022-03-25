@@ -16,6 +16,7 @@ class Cors
      */
     public function handle(Request $request, Closure $next)
     {
+        // CORS middleware has been added to prevent errors in HTTP<->HTTPS connections
         header("Access-Control-Allow-Origin: *");
 
         $headers = [

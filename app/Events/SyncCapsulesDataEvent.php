@@ -23,6 +23,7 @@ class SyncCapsulesDataEvent
      */
     public function __construct($subject, $msg)
     {
+        // Delivers the message and subject parts of the e-mail to the listener
         $this->subject = $subject;
         $this->msg = $msg;
     }

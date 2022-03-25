@@ -17,6 +17,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
+// CORS middleware has been added to prevent errors in HTTP<->HTTPS connections
 Route::middleware('cors')->group(function(){
     Route::get('/capsules', 'CapsulesAPIController@get_all_data');
     Route::get('/capsules/{capsule_serial}', 'CapsulesAPIController@get_with_serial');
