@@ -1,3 +1,40 @@
+````
+git clone https://github.com/muhammedtur/epigra_assignment.git
+````
+
+````
+cd epigra_assignment
+````
+
+````
+composer update
+````
+
+````
+env.example -> .env (should be updated database variables and APP_URL)
+````
+
+````
+php artisan migrate
+````
+
+````
+php artisan db:seed
+````
+
+````
+php artisan key:generate
+````
+
+````
+php artisan passport:install
+````
+
+````
+php artisan serve --port=8080 (should be same with APP_URL)
+````
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
