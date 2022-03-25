@@ -156,6 +156,83 @@
                 }
             }
         },
+        "/api/capsules/{capsule_serial}": {
+            "get": {
+                "tags": [
+                    "Capsules"
+                ],
+                "parameters": [{
+                    "name": "capsule_serial",
+                    "in": "path",
+                    "description": "Get capsule data by capsule serial",
+                    "type": "string",
+                    "example": "C101",
+                    "required": true
+                }],
+                "summary": "Capsules API",
+                "operationId": "jfheu09924760dfb5ba480e78b8d7337",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "capsule_serial": {
+                                            "type": "string",
+                                            "example": "C101"
+                                        },
+                                        "capsule_id": {
+                                            "type": "string",
+                                            "example": "dragon1"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "retired"
+                                        },
+                                        "original_launch": {
+                                            "type": "string",
+                                            "example": "2010-12-08T15:43:00.000Z"
+                                        },
+                                        "original_launch_unix": {
+                                            "type": "number",
+                                            "example": 1291822980
+                                        },
+                                        "missions": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "example": {
+                                                    "name": "COTS 1",
+                                                    "flight": 7
+                                                }
+                                            }
+                                        },
+                                        "landings": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "example": "Dragon 1.0"
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Reentered after three weeks in orbit"
+                                        },
+                                        "reuse_count": {
+                                            "type": "number",
+                                            "example": 0
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/oauth/authorize?client_id&redirect_uri&response_type&scope&state": {
             "get": {
                 "tags": [
