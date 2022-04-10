@@ -35,6 +35,10 @@ To install the dependencies:
 
 ```bash
 composer update
+
+php artisan migrate
+
+php artisan db:seed //Create default application
 ```
 
 ## Running
