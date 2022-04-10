@@ -47,8 +47,14 @@ php artisan db:seed
 
 ## Running
 
-### Development Mode
+To run the app:
 
 ```bash
-npm run-script dev
+php artisan serve --port=80
+```
+
+To run the scheduler:
+
+```bash
+php artisan schedule:work
 ```
