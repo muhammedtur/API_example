@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center"><a href="https://github.com/muhammedtur/mobile-api/releases" target="_blank"><img src="https://img.shields.io/badge/version-v1.0-blue?style=for-the-badge&logo=none" alt="cli version" /></a>&nbsp;<img src="https://img.shields.io/badge/license-apache_2.0-red?style=for-the-badge&logo=none" alt="license" /></p>
-
+<p align="center"><b>Mobile API APP </b> included API + Worker.</p>
 
 ## Requirements
 
@@ -36,9 +36,13 @@ To install the dependencies:
 ```bash
 composer update
 
+env.example -> .env (Should be updated database variables and APP_URL)
+
+php artisan key:generate
+
 php artisan migrate
 
-php artisan db:seed //Create default application
+php artisan db:seed
 ```
 
 ## Running
